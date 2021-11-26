@@ -12,14 +12,23 @@ blue = pygame.Color(0, 0 , 255)
 light_blue = pygame.Color(125, 125, 255)
 red = pygame.Color(255, 0, 0)
 
+print("Starting Game:")
+print("DATA: Game Loading 6 Assets")
+
 # Display
 displaysurf = pygame.display.set_mode((400, 600))
 displaysurf.fill(white)
 pygame.display.set_caption("Game")
 
 background = pygame.image.load("data/flag.png")
+print("DATA: Loading " + str(background))
+print("DATA: Done")
 end_screen = pygame.image.load("data/end.png")
+print("DATA: Loading " + str(end_screen))
+print("DATA: Done")
 
+print("DATA: Assets Loaded")
+print("DATA: Loading Fonts")
 # fonts
 font = pygame.font.SysFont("Verderna", 60)
 font_small = pygame.font.SysFont("Verdana", 20)
@@ -28,6 +37,10 @@ game_over = font.render("Game Over Nerd", True, black)
 # audio
 pygame.mixer.music.load('data/background.mp3')
 
+# Debug
+
+print("DATA: Loaded Music And Fonts...")
+print("DATA: Sucessfully Loaded")
 
 # others
 screen_height = 600
@@ -36,10 +49,14 @@ speed = 5
 increase = 1
 score = 0
 
+print("DATA: Loading Display: " + str(screen_height) + " x " + str(screen_width))
+
+
 # Makes a fixed FPS
 FPS = 60
 framepersec = pygame.time.Clock()
-
+print("WARNING: FPS Value Set At " + str(FPS) + " (This is not a bug)")
+print("DATA: Done Loading")
 # Enemys And Objects
 
 class enemy(pygame.sprite.Sprite):
@@ -95,17 +112,23 @@ all_sprites = pygame.sprite.Group()
 all_sprites.add(p1)
 all_sprites.add(e1)
 
+print("DATA: Loaded Sprites")
+
 # User event
 inc_speed = pygame.USEREVENT + increase
 pygame.time.set_timer(inc_speed, 10000)
 
 pygame.mixer.music.play(-1)
 
+# Start Game Conformation
+
 # game loop
 while True:
 
     displaysurf.blit(background, (0, 0))
     scores = font_small.render(str(score), True, black)
+    fps_display = font_small.render("FPS: " + str(FPS), True, black)
+    displaysurf.blit(fps_display, (320, 10))
     displaysurf.blit(scores, (10, 10))
 
     for event in pygame.event.get():
@@ -113,6 +136,8 @@ while True:
             speed += 2
 
         if event.type == QUIT:
+            print("WARNING: This is Not An Issue.")
+            print("WARNING: Crash Handler: Game Forcibly Closed.")
             pygame.quit()
             sys.exit()
 
@@ -132,6 +157,7 @@ while True:
         pygame.display.update()
         for entity in all_sprites:
             entity.kill()
+        print("WARNING: Game Closed: Game Over!")
         time.sleep(2)
         pygame.quit()
         sys.exit()
